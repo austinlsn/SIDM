@@ -22,6 +22,7 @@ photon_base: &photon_base
 muon_base: &muon_base
   - "muon_n"
   - "muon_pt"
+  - "muon_highpt"
   - "muon_eta_phi"
   - "muon_absD0"
   - "muon_absD0_lowRange"
@@ -29,6 +30,7 @@ muon_base: &muon_base
 dsaMuon_base: &dsaMuon_base
   - "dsaMuon_n"
   - "dsaMuon_pt"
+  - "dsaMuon_highpt"
   - "dsaMuon_eta_phi"
   - "dsaMuon_absD0"
   - "dsaMuon_absD0_lowRange"
@@ -181,6 +183,8 @@ lepton_genLepton_base: &lepton_genLepton_base
   - "dsaMuon0_genMu0_ptRatio_vs_truept"
   - "muon0_genMu0_ptRatio_vs_truept"
   - "egmLj_ptRatio_vs_egm_truept"
+  - "ljMu_genMu_ptRatio"
+
 
 lepton_genLepton_genA_base: &lepton_genLepton_genA_base
   - "genA_dsaMuonLj_ptRatio"
