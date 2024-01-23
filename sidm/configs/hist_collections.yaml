@@ -91,6 +91,8 @@ lj_lj_base: &lj_lj_base
   - "lj_lj_absdphi"
   - "lj_lj_invmass"
   - "lj_lj_invmass_lowRange"
+  - "mu_mu_invmass_lowRange"
+
 
 abcd_base: &abcd_base
   - "abcd_lj_lj_dphi_vs_lj0_pfIsolationPt05"
@@ -146,6 +148,7 @@ genA_base: &genA_base
   - "genA_toE_matched_lj_lxy"
   - "genA_matched_muLj_lxy"
   - "genA_toMu_matched_muLj_lxy"
+#  - "genA_toMu_matched_muLj_pt"
   - "genA_matched_egmLj_lxy"
   - "genA_toE_matched_egmLj_lxy"
   - "genA_matched_lj_n"

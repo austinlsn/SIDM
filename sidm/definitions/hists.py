@@ -588,6 +588,21 @@ hist_defs = {
         ],
         evt_mask=lambda objs: ak.num(objs["ljs"]) > 1,
     ),
+    "mu_mu_invmass_lowRange": h.Histogram(
+        # [
+        #     h.Axis(hist.axis.Regular(100, 0, 500, name="mumu_mass", label=r"InvMass($LJ_{0}$, $LJ_{1}$)"),
+        #            lambda objs, mask: derived_objs["mu_ljs"](objs)[mask, :2].sum().mass),
+        # ],
+        # evt_mask=lambda objs: ak.num(derived_objs["mu_ljs"](objs)) > 1,
+        [
+            h.Axis(hist.axis.Regular(100, 0, 500, name="mumu_mass", label=r"InvMass($LJ_{0}$, $LJ_{1}$)"),
+                    lambda objs, mask: derived_objs["mu_ljs"](objs)[mask, :2].sum().mass),
+        ],
+        evt_mask=lambda objs: ak.num(derived_objs["mu_ljs"](objs)) > 1,
+    ),
+
+    
+    
     # ABCD plane
     "abcd_lj_lj_dphi_vs_lj0_pfIsolationPt05": h.Histogram(
         [
@@ -819,7 +834,6 @@ hist_defs = {
                    lambda objs, mask: (objs["dsaMuons"][mask,0:1].pt
                        / objs["dsaMuons"][mask,0:1].nearest(objs["genMus"][mask], threshold=0.4).pt)),
         ],
-        # evt_mask=lambda objs: (ak.num(objs["dsaMuons"]) > 0) & (ak.num(objs["genMus"]) > 0)
         evt_mask=lambda objs: (ak.num(objs["dsaMuons"][dR(objs["dsaMuons"],objs["genMus"]) < 0.4])>0)
     ),
     "dsaMuon1_genMu_ptRatio": h.Histogram(
@@ -988,10 +1002,16 @@ hist_defs = {
     ),
     "genA_toMu_matched_muLj_lxy": h.Histogram(
         [
-            h.Axis(hist.axis.Regular(100, 0, 40, name="genA_toMu_matched_muLj_lxy"),
+            h.Axis(hist.axis.Regular(100, 0, 100, name="genA_toMu_matched_muLj_lxy"),
                    lambda objs, mask: lxy(derived_objs["genAs_toMu_matched_muLj"](objs, 0.4)) ),
         ],
     ),
+    # "genA_toMu_matched_muLj_pt": h.Histogram(
+    #     [
+    #         h.Axis(hist.axis.Regular(100, 0, 40, name="genA_toMu_matched_muLj_pt"),
+    #                lambda objs, mask: derived_objs["genAs_toMu_matched_muLj"](objs).pt),
+    #     ],
+    # ),    
     "genA_matched_egmLj_lxy": h.Histogram(
         [
             h.Axis(hist.axis.Regular(100, 0, 500, name="genA_matched_egmLj_lxy"),
