@@ -13,6 +13,7 @@ electron_base: &electron_base
   - "electron_n"
   - "electron_pt"
   - "electron_eta_phi"
+  - "electrons_matched_egmLj_invmass"
 
 photon_base: &photon_base
   - "photon_n"
@@ -26,6 +27,7 @@ muon_base: &muon_base
   - "muon_eta_phi"
   - "muon_absD0"
   - "muon_absD0_lowRange"
+  - "muons_matched_muLj_invmass"
 
 dsaMuon_base: &dsaMuon_base
   - "dsaMuon_n"
@@ -92,6 +94,7 @@ lj_lj_base: &lj_lj_base
   - "lj_lj_invmass"
   - "lj_lj_invmass_lowRange"
   - "mu_mu_invmass_lowRange"
+  - "egm_egm_invmass_lowRange"
 
 
 abcd_base: &abcd_base
@@ -117,6 +120,7 @@ genMu_base: &genMu_base
   - "genMu_n"
   - "genMu_pt"
   - "genMu_pt_highRange"
+  - "genMu_highpt"
   - "genMu0_pt"
   - "genMu1_pt"
   - "genMu0_pt_highRange"
@@ -136,8 +140,10 @@ genA_base: &genA_base
   - "genA_lxy"
   - "genA_lxy_lowRange"
   - "genAs_toMu_lxy"
-  - "genAs_toE_lxy"
   - "genAs_toMu_n"
+  - "genAs_toMu_invmass"
+  - "genAs_toE_lxy"
+  - "genAs_toE_invmass"
   - "genA_pt_highRange"
   - "genA_pt_lxy"
   - "genA_lj_dR"

@@ -74,6 +74,13 @@ hist_defs = {
                    lambda objs, mask: objs["electrons"].phi),
         ],
     ),
+    "electrons_matched_egmLj_invmass": h.Histogram(
+        [
+            h.Axis(hist.axis.Regular(100, 0, 6, name="electrons_matched_egmLj_invmass",
+                                     label=r"Electron invmass [GeV]"),
+                   lambda objs, mask: abs(derived_objs["electrons_matched_egmLj"](objs, 0.4).sum().mass)),
+        ],
+    ), 
     "electron_nearGenA_n": h.Histogram(
         [
             # number of electrons within dR=0.5 of a genA that decays to electrons
@@ -168,7 +175,7 @@ hist_defs = {
     ),
     "muon_highpt": h.Histogram(
         [
-            h.Axis(hist.axis.Regular(100, 1000, 2000, name="muon_highpt"),
+            h.Axis(hist.axis.Regular(100, 1000, 2000, name="muon_highpt", label=r"all reco muon $p_{T}$ [GeV]"),
                    lambda objs, mask: objs["muons"].pt),
         ],
     ),
@@ -193,6 +200,13 @@ hist_defs = {
                    lambda objs, mask: abs(objs["muons"].d0)),
         ],
     ),
+    "muons_matched_muLj_invmass": h.Histogram(
+        [
+            h.Axis(hist.axis.Regular(100, 0, 6, name="muons_matched_muLj_invmass",
+                                     label=r"Muon invmass [GeV]"),
+                   lambda objs, mask: abs(derived_objs["muons_matched_muLj"](objs,0.4).sum().mass)),
+        ],
+    ),             
     "muon_nearGenA_n": h.Histogram(
         [
             # number of muons within dR=0.5 of a genA that decays to muons
@@ -588,20 +602,22 @@ hist_defs = {
         ],
         evt_mask=lambda objs: ak.num(objs["ljs"]) > 1,
     ),
+    # ---------------- Should add to have same # of entries as 'lj_lj_invmass_lowRange'... Why doesn't it?
     "mu_mu_invmass_lowRange": h.Histogram(
-        # [
-        #     h.Axis(hist.axis.Regular(100, 0, 500, name="mumu_mass", label=r"InvMass($LJ_{0}$, $LJ_{1}$)"),
-        #            lambda objs, mask: derived_objs["mu_ljs"](objs)[mask, :2].sum().mass),
-        # ],
-        # evt_mask=lambda objs: ak.num(derived_objs["mu_ljs"](objs)) > 1,
         [
             h.Axis(hist.axis.Regular(100, 0, 500, name="mumu_mass", label=r"InvMass($LJ_{0}$, $LJ_{1}$)"),
                     lambda objs, mask: derived_objs["mu_ljs"](objs)[mask, :2].sum().mass),
         ],
         evt_mask=lambda objs: ak.num(derived_objs["mu_ljs"](objs)) > 1,
     ),
-
-    
+    "egm_egm_invmass_lowRange": h.Histogram(
+        [ # Require 2 electrons in the jet (thus I use '(objs,2)')
+            h.Axis(hist.axis.Regular(100, 0, 500, name="egmegm_mass", label=r"InvMass($LJ_{0}$, $LJ_{1}$)"),
+                    lambda objs, mask: derived_objs["egm_ljs"](objs)[mask, :2].sum().mass),
+        ],
+        evt_mask=lambda objs: ak.num(derived_objs["egm_ljs"](objs)) > 1,
+    ),
+    # ----------------
     
     # ABCD plane
     "abcd_lj_lj_dphi_vs_lj0_pfIsolationPt05": h.Histogram(
@@ -738,6 +754,13 @@ hist_defs = {
     "genMu_pt_highRange": h.Histogram(
         [
             h.Axis(hist.axis.Regular(200, 0, 700, name="genMu_pt",
+                                     label=r"Gen-level muon $p_{T}$ [GeV]"),
+                   lambda objs, mask: abs(objs["genMus"].pt)),
+        ],
+    ),
+    "genMu_highpt": h.Histogram(
+        [
+            h.Axis(hist.axis.Regular(100, 1000, 2000, name="genMu_pt",
                                      label=r"Gen-level muon $p_{T}$ [GeV]"),
                    lambda objs, mask: abs(objs["genMus"].pt)),
         ],
@@ -925,6 +948,19 @@ hist_defs = {
                    lambda objs, mask: abs(objs["genAs_toMu"].pt) ),
         ],
     ),
+    "genAs_toMu_n": h.Histogram(
+        [
+            h.Axis(hist.axis.Regular(10, 0, 10, name="genAs_toMu_n"),
+                   lambda objs, mask: ak.num(objs["genAs_toMu"]) ),
+        ],
+    ),
+    "genAs_toMu_invmass": h.Histogram(
+        [
+            h.Axis(hist.axis.Regular(100, 0, 6, name="genAs_toMu_invmass",
+                                    label=r"genAs_toMu invmass [GeV]"),
+                   lambda objs, mask: (objs["genAs_toMu"]).sum().mass ),
+        ],
+    ),
     "genAs_toE_lxy": h.Histogram(
         [
             h.Axis(hist.axis.Regular(100, 0, 500, name="genAs_toE_lxy"),
@@ -938,10 +974,11 @@ hist_defs = {
                    lambda objs, mask: abs(objs["genAs_toE"].pt) ),
         ],
     ),
-    "genAs_toMu_n": h.Histogram(
+   "genAs_toE_invmass": h.Histogram(
         [
-            h.Axis(hist.axis.Regular(10, 0, 10, name="genAs_toMu_n"),
-                   lambda objs, mask: ak.num(objs["genAs_toMu"]) ),
+            h.Axis(hist.axis.Regular(100, 0, 6, name="genAs_toE_invmass",
+                                    label=r"genAs_toE invmass [GeV]"),
+                   lambda objs, mask: (objs["genAs_toE"]).sum().mass ),
         ],
     ),
     "genA_pt_lxy": h.Histogram(

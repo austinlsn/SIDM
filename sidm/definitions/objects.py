@@ -33,4 +33,8 @@ derived_objs = {
     "genAs_toMu_matched_muLj": lambda objs, r: objs["genAs_toMu"][dR(objs["genAs_toMu"], objs["ljs"][(objs["ljs"].muon_n >= 2)]) < r],
     "genAs_matched_egmLj": lambda objs, r: objs["genAs"][dR(objs["genAs"], objs["ljs"][(objs["ljs"].muon_n == 0)]) < r],
     "genAs_toE_matched_egmLj": lambda objs, r: objs["genAs_toE"][dR(objs["genAs_toE"], objs["ljs"][(objs["ljs"].muon_n == 0)]) < r],
+    
+    "electrons_matched_egmLj": lambda objs, r: objs["electrons"][dR(objs["electrons"], objs["ljs"][(objs["ljs"].muon_n == 0)]) < r],
+    "muons_matched_muLj": lambda objs, r: objs["muons"][dR(objs["muons"], objs["ljs"][(objs["ljs"].muon_n >= 2)]) < r],
+
 }
