@@ -167,6 +167,13 @@ hist_defs = {
                    lambda objs, mask: ak.num(objs["muons"])),
         ],
     ),
+    "matched_muon_n": h.Histogram(
+        [
+            h.Axis(hist.axis.Integer(0, 10, name="matched_muon_n"),
+                   lambda objs, mask: ak.num(derived_objs["muons_matched_genMus"](objs, 0.4))),
+        ],
+    ),
+
     "muon_pt": h.Histogram(
         [
             h.Axis(hist.axis.Regular(100, 0, 200, name="muon_pt"),

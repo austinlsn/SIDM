@@ -1,6 +1,6 @@
 """Define all commonly used objects"""
 
-from sidm.tools.utilities import dR
+from sidm.tools.utilities import dR, genmatch
 
 # define objects whose definitions depend only on the event record
 primary_objs = {
@@ -37,4 +37,6 @@ derived_objs = {
     "electrons_matched_egmLj": lambda objs, r: objs["electrons"][dR(objs["electrons"], objs["ljs"][(objs["ljs"].muon_n == 0)]) < r],
     "muons_matched_muLj": lambda objs, r: objs["muons"][dR(objs["muons"], objs["ljs"][(objs["ljs"].muon_n >= 2)]) < r],
 
+    "muons_matched_genMus": lambda objs, r: objs["muons"][genmatch(objs["muons"], objs["genMus"], r)][0],
+        
 }

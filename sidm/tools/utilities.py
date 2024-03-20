@@ -60,6 +60,72 @@ def dR(obj1, obj2):
     """Return dR between obj1 and the nearest obj2"""
     return obj1.nearest(obj2, return_metric=True)[1]
 
+
+# def genmatch(obj1, obj2, iterations):
+#     remaining_obj2 = obj2
+#     for i in range(iterations):
+#         matched_obj2[i] = obj1.nearest(obj2)
+#         remaining_obj2.remove()
+#         matched_obj1[i] = obj1
+        
+    
+    
+# genmatch function requires dR function above it. 'threshold' is maximum dR for matching
+# this matches on first-come-first-serve basis, rather than checking which dR is absolute smallest and matching those
+def genmatch(objs1, objs2, threshold):
+    remaining_objs1 = objs1
+    remaining_objs2 = objs2
+    matched_objs1 = []
+    matched_objs2 = []
+    
+    
+
+    while len(remaining_objs1) > 0:
+        neighbor_objs2, r = remaining_objs1.nearest(remaining_objs2, return_metric=True)
+        for i in range(len(neighbor_objs2)):
+            print(neighbor_objs2[i])
+            print(r[i])
+            if np.all(r[i]) < threshold:
+                if neighbor_objs2[i] not in matched_objs2: 
+                    matched_objs1.append(objs1[i])
+                    matched_objs2.append(neighbor_objs2[i])
+                    remaining_objs1.remove(objs1[i])
+                    remaining_objs2.remove(neighbor_objs2[i])
+                else: # if match is a duplicate, re-calculate nearest() using remaining objects
+                    break
+            else: # if r from nearest() doesn't meet threshold, remove those objects entirely
+                remaining_objs1.remove(objs1[i])
+                remaining_objs2.remove(neighbor_objs2[i])    
+    """
+    for _, obj1 in enumerate(objs1):
+        Mobj2, r = obj1[1].nearest(remaining_objs2, axis=None, return_metric=True)
+        # obj1[1] is obj1 definition (as opposed to obj1 name). Allows for broadcasting (cartesian product::scalar*array)
+        M2 = np.argmin(r)
+        if Mobj2[M2] not in matched_obj2: 
+            matched_obj2.append(Mobj2[M2])
+
+        if r < threshold:
+            matched_objs2.append(Mobj2)
+            matched_objs1.append(obj1)
+            remaining_objs2.remove(Mobj2) # remove matched object so it isn't matched twice
+    """
+    """
+    temp_objs2, minRs = objs1.nearest(objs2, return_metric=True)
+    
+    for M2, r in enumerate(minRs):
+        if r < threshold: 
+            if temp_objs2[M2] not in matched_objs2:
+                matched_objs1.append(objs1[M2])
+                matched_objs2.append(temp_objs2[M2])
+
+            
+    matched_objs2 = set(matched_objs2) # 'set()' removes duplicates
+    
+    print(temp_objs2)
+    """   
+    """Return lists of obj1s which have matches, and matched obj2s"""
+    return matched_objs1, matched_objs2
+
 def lxy(obj):
     """Return transverse distance between production and decay vertices"""
     return (obj.dauvtx - obj.vtx).r
