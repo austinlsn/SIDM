@@ -61,41 +61,52 @@ def dR(obj1, obj2):
     return obj1.nearest(obj2, return_metric=True)[1]
 
 
-# def genmatch(obj1, obj2, iterations):
-#     remaining_obj2 = obj2
-#     for i in range(iterations):
-#         matched_obj2[i] = obj1.nearest(obj2)
-#         remaining_obj2.remove()
-#         matched_obj1[i] = obj1
+def genmatch(obj1, obj2, iterations):
+    remaining_obj2 = obj2
+    for i in range(iterations):
+        matched_obj2[i] = obj1.nearest(obj2)
+        remaining_obj2.remove()
+        matched_obj1[i] = obj1
         
     
+def match_objects(objs, reference_objs, condition, previous_matches=None):
+    """
+    Match objects in 'objs' to reference objects in 'reference_objs' based on the given condition,
+    while avoiding duplicates found in 'previous_matches'. Returns matches.
+    """
+    if previous_matches is None:
+        previous_matches = set()  # Initialize previous_matches as an empty set if not provided
+    matches = [obj for obj in objs if all(condition(obj, ref) and ref not in previous_matches for ref in reference_objs)]
+    previous_matches.update(matches)  # Update previous_matches with new matches
+    return matches
+
     
-# genmatch function requires dR function above it. 'threshold' is maximum dR for matching
-# this matches on first-come-first-serve basis, rather than checking which dR is absolute smallest and matching those
-def genmatch(objs1, objs2, threshold):
-    remaining_objs1 = objs1
-    remaining_objs2 = objs2
-    matched_objs1 = []
-    matched_objs2 = []
+# # genmatch function requires dR function above it. 'threshold' is maximum dR for matching
+# # this matches on first-come-first-serve basis, rather than checking which dR is absolute smallest and matching those
+# def genmatch(objs1, objs2, threshold):
+#     remaining_objs1 = objs1
+#     remaining_objs2 = objs2
+#     matched_objs1 = []
+#     matched_objs2 = []
     
     
 
-    while len(remaining_objs1) > 0:
-        neighbor_objs2, r = remaining_objs1.nearest(remaining_objs2, return_metric=True)
-        for i in range(len(neighbor_objs2)):
-            print(neighbor_objs2[i])
-            print(r[i])
-            if np.all(r[i]) < threshold:
-                if neighbor_objs2[i] not in matched_objs2: 
-                    matched_objs1.append(objs1[i])
-                    matched_objs2.append(neighbor_objs2[i])
-                    remaining_objs1.remove(objs1[i])
-                    remaining_objs2.remove(neighbor_objs2[i])
-                else: # if match is a duplicate, re-calculate nearest() using remaining objects
-                    break
-            else: # if r from nearest() doesn't meet threshold, remove those objects entirely
-                remaining_objs1.remove(objs1[i])
-                remaining_objs2.remove(neighbor_objs2[i])    
+#     while len(remaining_objs1) > 0:
+#         neighbor_objs2, r = remaining_objs1.nearest(remaining_objs2, return_metric=True)
+#         for i in range(len(neighbor_objs2)):
+#             print(neighbor_objs2[i])
+#             print(r[i])
+#             if np.all(r[i]) < threshold:
+#                 if neighbor_objs2[i] not in matched_objs2: 
+#                     matched_objs1.append(objs1[i])
+#                     matched_objs2.append(neighbor_objs2[i])
+#                     remaining_objs1.remove(objs1[i])
+#                     remaining_objs2.remove(neighbor_objs2[i])
+#                 else: # if match is a duplicate, re-calculate nearest() using remaining objects
+#                     break
+#             else: # if r from nearest() doesn't meet threshold, remove those objects entirely
+#                 remaining_objs1.remove(objs1[i])
+#                 remaining_objs2.remove(neighbor_objs2[i])    
     """
     for _, obj1 in enumerate(objs1):
         Mobj2, r = obj1[1].nearest(remaining_objs2, axis=None, return_metric=True)
@@ -124,7 +135,7 @@ def genmatch(objs1, objs2, threshold):
     print(temp_objs2)
     """   
     """Return lists of obj1s which have matches, and matched obj2s"""
-    return matched_objs1, matched_objs2
+    # return matched_objs1, matched_objs2
 
 def lxy(obj):
     """Return transverse distance between production and decay vertices"""

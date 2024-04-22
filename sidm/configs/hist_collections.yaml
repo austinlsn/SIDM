@@ -22,7 +22,7 @@ photon_base: &photon_base
 
 muon_base: &muon_base
   - "muon_n"
-  - "matched_muon_n"
+#  - "matched_muon_n"
   - "muon_pt"
   - "muon_highpt"
   - "muon_eta_phi"
