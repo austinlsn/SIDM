@@ -22,7 +22,6 @@ photon_base: &photon_base
 
 muon_base: &muon_base
   - "muon_n"
-#  - "matched_muon_n"
   - "muon_pt"
   - "muon_highpt"
   - "muon_eta_phi"
@@ -154,10 +153,7 @@ genA_base: &genA_base
   - "genA_toMu_matched_lj_lxy"
   - "genA_toE_matched_lj_lxy"
   - "genA_matched_muLj_lxy"
-  - "genA_toMu_matched_muLj_lxy"
-#  - "genA_toMu_matched_muLj_pt"
   - "genA_matched_egmLj_lxy"
-  - "genA_toE_matched_egmLj_lxy"
   - "genA_matched_lj_n"
   - "genAs_toE_pt"
   - "genAs_toMu_pt"
