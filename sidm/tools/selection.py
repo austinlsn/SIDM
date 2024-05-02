@@ -22,10 +22,11 @@ class Selection:
 
     def apply_evt_cuts(self, objs, verbose=False):
         """Evaluate all event cuts and apply results to object collections"""
+
         # evaluate all selected cuts
         for cut in self.evt_cuts:
             if verbose:
-                print("Adding ",cut)
+                print("Applying cut: ", cut)
             self.all_evt_cuts.add(cut, evt_cut_defs[cut](objs))
 
         # apply event cuts to object collections
@@ -52,18 +53,29 @@ class JaggedSelection:
     def evaluate_obj_cuts(self, objs, verbose=False):
         """Evaluate all relevant object-level cuts that have not already been evaluated"""
         for obj, cuts in self.obj_cuts.items():
+            if obj not in objs:
+                print(f"Warning: {obj} not found in sample. "
+                      f"The following cuts will not be applied: {cuts}")
+                continue
             if obj not in self.evaluated_obj_cuts:
                 self.evaluated_obj_cuts[obj] = {}
             for cut in cuts:
                 if cut not in self.evaluated_obj_cuts[obj]:
                     if verbose:
                         print("Evaluating ", obj," ",cut)
-                    self.evaluated_obj_cuts[obj][cut] = obj_cut_defs[obj][cut](objs)
+                    try:
+                        self.evaluated_obj_cuts[obj][cut] = obj_cut_defs[obj][cut](objs)
+                    except:
+                        print(f"Warning: Unable to apply {cut} for {obj}. Skipping.")
 
     def make_obj_masks(self, channel_cut_list, verbose=False):
         """Create one mask per object, using the subset of cuts specified in channel_cut_list"""
         obj_masks = {}
         for obj, cuts in channel_cut_list.items():
+            if obj not in self.evaluated_obj_cuts:
+                print(f"Warning: {obj} not found in sample. "
+                      f"The following cuts will not be applied: {cuts}")
+                continue
             for cut in cuts:
                 if cut not in self.evaluated_obj_cuts[obj]:
                     print("Uh oh, haven't evaluated this cut yet! Make sure it was included in the list of cuts you used to initialize this JaggedSelection.  ", obj, ": ",cut)

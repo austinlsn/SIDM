@@ -52,9 +52,12 @@ class SidmProcessor(processor.ProcessorABC):
         # create object collections
         objs = {}
         for obj_name, obj_def in primary_objs.items():
-            objs[obj_name] = obj_def(events)
-            # pt order
-            objs[obj_name] = self.order(objs[obj_name])
+            try:
+                objs[obj_name] = obj_def(events)
+                # pt order
+                objs[obj_name] = self.order(objs[obj_name])
+            except AttributeError:
+                print(f"Warning: {obj_name} not found in this sample. Skipping.")
 
         cutflows = {}
         counters = {}
@@ -116,7 +119,10 @@ class SidmProcessor(processor.ProcessorABC):
                 counters[lj_reco][channel] = {}
 
                 for name, counter in counter_defs.items():
-                    counters[lj_reco][channel][name]=counter(sel_objs)
+                    try:
+                        counters[lj_reco][channel][name] = counter(sel_objs)
+                    except (KeyError, AttributeError) as e:
+                        print(f"Warning: cannot fill counter {name}. Skipping.")
 
         # lose lj_reco dimension to cutflows if only one reco was run
         if len(self.lj_reco_choices) == 1:
@@ -254,7 +260,7 @@ class SidmProcessor(processor.ProcessorABC):
             # and add cuts to cuts.py and selections.yaml
 
             # pt order the new LJs
-            self.order(ljs)
+            ljs = self.order(ljs)
         else:
             raise NotImplementedError(f"{lj_reco} is not a recognized LJ reconstruction choice")
         # return the new LJ collection
@@ -290,7 +296,8 @@ class SidmProcessor(processor.ProcessorABC):
                     channel_cuts[channel]["obj"][obj] = []
                 channel_cuts[channel]["obj"][obj] = utilities.flatten(obj_cuts)
 
-            channel_cuts[channel]["evt"] = utilities.flatten(cuts["evt_cuts"])
+            if "evt_cuts" in cuts:
+                channel_cuts[channel]["evt"] = utilities.flatten(cuts["evt_cuts"])
             if "lj_cuts" in cuts:
                 channel_cuts[channel]["lj"]["ljs"] = utilities.flatten(cuts["lj_cuts"])
             else:

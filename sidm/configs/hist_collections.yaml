@@ -9,6 +9,26 @@ pv_base: &pv_base
   - "pv_z"
   - "pv_rho"
   
+electron_extra: &electron_extra
+  - "electron_GsfEleDEtaInSeedCut"
+  - "electron_GsfEleDPhiInCut"
+  - "electron_GsfEleEInverseMinusPInverseCut"
+  - "electron_GsfEleFull5x5SigmaIEtaIEtaCut"
+  - "electron_GsfEleRelPFIsoScaledCut"
+  - "electron_GsfEleConversionVetoCut"
+  - "electron_GsfEleHadronicOverEMEnergyScaledCut"
+  - "electron_GsfEleMissingHitsCut"
+
+electron_extra_2d: &electron_extra_2d
+  - "electron_GsfEleDEtaInSeedCut2d"
+  - "electron_GsfEleDPhiInCut2d"
+  - "electron_GsfEleEInverseMinusPInverseCut2d"
+  - "electron_GsfEleRelPFIsoScaledCut2d"
+  - "electron_GsfEleFull5x5SigmaIEtaIEtaCut2d"
+  - "electron_GsfEleConversionVetoCut2d"
+  - "electron_GsfEleHadronicOverEMEnergyScaledCut2d"
+  - "electron_GsfEleMissingHitsCut2d"
+
 electron_base: &electron_base
   - "electron_n"
   - "electron_pt"
@@ -58,12 +78,12 @@ lj_isolation: &lj_isolation
   - "lj_pfIsolation05"
   - "lj0_pfIsolation05"
   - "lj1_pfIsolation05"
-  - "lj_pfIsolationPtNoPU05"
-  - "lj_pfIsolationPt05"
+  - "lj_pfIsolationPtNoPU05" # not in v2 ntuples
+  - "lj_pfIsolationPt05" # not in v2 ntuples
   - "lj_pfIsolation07"
-  - "lj_pfIsolationPtNoPU07"
-  - "lj_pfIsolationPt07"
-  - "lj_pfiso"
+  - "lj_pfIsolationPtNoPU07" # not in v2 ntuples
+  - "lj_pfIsolationPt07" # not in v2 ntuples
+  #- "lj_pfiso"
 
 ljsource_base: &ljsource_base
   - "ljsource_n"
@@ -98,7 +118,7 @@ lj_lj_base: &lj_lj_base
 
 
 abcd_base: &abcd_base
-  - "abcd_lj_lj_dphi_vs_lj0_pfIsolationPt05"
+  - "abcd_lj_lj_dphi_vs_lj0_pfIsolationPt05" # not in v2 ntuples
 
 genE_base: &genE_base
   - "genE_n"

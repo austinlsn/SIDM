@@ -116,3 +116,263 @@ baseNoLj_veryDisplacedA: &baseNoLj_veryDisplacedA
     <<: *obj_baseNoLj
     genAs:
       - "lxy >= 100 cm"
+
+# Selections for electrons only
+# All reco electrons in the barrel
+barrelE: &barrelE
+  evt_cuts:
+    - "Keep all evts"
+  obj_cuts: &obj_barrelE
+    electrons: &e_barrelE
+      - "|eta| < 1.479"
+
+# same as above, but with electron-genA dR matching
+barrelE_matched: &barrelE_matched
+  <<: *barrelE
+  obj_cuts:
+    <<: *obj_barrelE
+    electrons:
+      - *e_barrelE
+      - "dR(e, A) < 0.5"
+
+# All reco electrons in the endcaps
+endcapE: &endcapE
+  evt_cuts:
+    - "Keep all evts"
+  obj_cuts: &obj_endcapE
+    electrons: &e_endcapE
+      - "1.479 < |eta| < 2.4"
+
+# same as above, but with electron-genA dR matching
+endcapE_matched: &endcapE_matched
+  <<: *endcapE
+  obj_cuts:
+    <<: *obj_endcapE
+    electrons:
+      - *e_endcapE
+      - "dR(e, A) < 0.5"
+
+# Loose reco electrons in the barrel
+looseBarrelE: &looseBarrelE
+  evt_cuts:
+    - "Keep all evts"
+  obj_cuts: &obj_looseBarrelE
+    <<: *obj_barrelE
+    electrons: &e_looseBarrelE
+      - *e_barrelE
+      - "pT > 10 GeV"
+      - "looseID"
+
+# same as above, but with electron-genA dR matching
+looseBarrelE_matched: &looseBarrelE_matched
+  <<: *looseBarrelE
+  obj_cuts:
+    <<: *obj_looseBarrelE
+    electrons:
+      - *e_looseBarrelE
+      - "dR(e, A) < 0.5"
+
+# Loose reco electrons in the endcaps
+looseEndcapE: &looseEndcapE
+  evt_cuts:
+    - "Keep all evts"
+  obj_cuts: &obj_looseEndcapE
+    <<: *obj_endcapE
+    electrons: &e_looseEndcapE
+      - *e_endcapE
+      - "pT > 10 GeV"
+      - "looseID"
+
+# same as above, but with electron-genA dR matching
+looseEndcapE_matched: &looseEndcapE_matched
+  <<: *looseEndcapE
+  obj_cuts:
+    <<: *obj_looseEndcapE
+    electrons:
+      - *e_looseEndcapE
+      - "dR(e, A) < 0.5"
+
+# N-1 selections
+barrelE_ID-sigmaIetaIeta: &barrelE_ID-sigmaIetaIeta
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-sigmaIetaIeta
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-sigmaIetaIeta
+      - *e_barrelE
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-sigmaIetaIeta_matched: &barrelE_ID-sigmaIetaIeta_matched
+  <<: *barrelE_ID-sigmaIetaIeta
+  obj_cuts:
+    <<: *obj_barrelE_ID-sigmaIetaIeta
+    electrons:
+      - *e_barrelE_ID-sigmaIetaIeta
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-DPhiIn: &barrelE_ID-DPhiIn
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-DPhiIn 
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-DPhiIn
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-DPhiIn_matched: &barrelE_ID-DPhiIn_matched
+  <<: *barrelE_ID-DPhiIn
+  obj_cuts:
+    <<: *obj_barrelE_ID-DPhiIn
+    electrons:
+      - *e_barrelE_ID-DPhiIn
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-EtaInSeed: &barrelE_ID-EtaInSeed
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-EtaInSeed
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-EtaInSeed
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-EtaInSeed_matched: &barrelE_ID-EtaInSeed_matched
+  <<: *barrelE_ID-EtaInSeed
+  obj_cuts:
+    <<: *obj_barrelE_ID-EtaInSeed
+    electrons:
+      - *e_barrelE_ID-EtaInSeed
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-Inverse: &barrelE_ID-Inverse
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-Inverse
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-Inverse
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-Inverse_matched: &barrelE_ID-Inverse_matched
+  <<: *barrelE_ID-Inverse
+  obj_cuts:
+    <<: *obj_barrelE_ID-Inverse
+    electrons:
+      - *e_barrelE_ID-Inverse
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-Iso: &barrelE_ID-Iso
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-Iso
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-Iso
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-Iso_matched: &barrelE_ID-Iso_matched
+  <<: *barrelE_ID-Iso
+  obj_cuts:
+    <<: *obj_barrelE_ID-Iso
+    electrons:
+      - *e_barrelE_ID-Iso
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-ConversionVeto: &barrelE_ID-ConversionVeto
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-ConversionVeto
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-ConversionVeto
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel H/E"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-ConversionVeto_matched: &barrelE_ID-ConversionVeto_matched
+  <<: *barrelE_ID-ConversionVeto
+  obj_cuts:
+    <<: *obj_barrelE_ID-ConversionVeto
+    electrons:
+      - *e_barrelE_ID-ConversionVeto
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-HE: &barrelE_ID-HE
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-HE
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-HE
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel MissingHits"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-HE_matched: &barrelE_ID-HE_matched
+  <<: *barrelE_ID-HE
+  obj_cuts:
+    <<: *obj_barrelE_ID-HE
+    electrons:
+      - *e_barrelE_ID-HE
+      - "dR(e, A) < 0.5"
+
+barrelE_ID-MissingHits: &barrelE_ID-MissingHits
+  <<: *barrelE
+  obj_cuts: &obj_barrelE_ID-MissingHits
+    <<: *obj_barrelE
+    electrons: &e_barrelE_ID-MissingHits
+      - *e_barrelE
+      - "barrel SigmaIEtaIEtaCut"
+      - "barrel DPhiInCut"
+      - "barrel DEtaInSeedCut"
+      - "barrel InverseCut"
+      - "barrel Iso"
+      - "barrel ConversionVeto"
+      - "barrel H/E"
+
+# same as above, but with electron-genA dR matching
+barrelE_ID-MissingHits_matched: &barrelE_ID-MissingHits_matched
+  <<: *barrelE_ID-MissingHits
+  obj_cuts:
+    <<: *obj_barrelE_ID-MissingHits
+    electrons:
+      - *e_barrelE_ID-MissingHits
+      - "dR(e, A) < 0.5"
